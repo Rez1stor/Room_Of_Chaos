@@ -13,6 +13,7 @@ import java.io.IOException;
 public class ConsoleView {
     private Terminal terminal;
     private LineReader lineReader;
+    private java.util.Scanner fallbackScanner;
 
     public ConsoleView() {
         try {
@@ -23,9 +24,10 @@ public class ConsoleView {
                     .terminal(terminal)
                     .build();
         } catch (IOException e) {
-            System.err.println("Failed to initialize terminal: " + e.getMessage());
+            System.err.println("Failed to initialize terminal, falling back to basic console: " + e.getMessage());
             terminal = null;
             lineReader = null;
+            fallbackScanner = new java.util.Scanner(System.in);
         }
     }
 
@@ -49,8 +51,7 @@ public class ConsoleView {
             return lineReader.readLine(prompt);
         } else {
             System.out.print(prompt);
-            java.util.Scanner scanner = new java.util.Scanner(System.in);
-            return scanner.nextLine();
+            return fallbackScanner.nextLine();
         }
     }
 
@@ -64,6 +65,9 @@ public class ConsoleView {
             } catch (IOException e) {
                 System.err.println("Error closing terminal: " + e.getMessage());
             }
+        }
+        if (fallbackScanner != null) {
+            fallbackScanner.close();
         }
     }
 

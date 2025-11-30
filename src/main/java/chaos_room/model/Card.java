@@ -8,6 +8,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Represents a card in the chaos room.
  */
 public class Card {
+    /**
+     * Shared ObjectMapper instance for JSON serialization/deserialization.
+     * ObjectMapper is thread-safe once configured and can be reused across threads.
+     */
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @JsonProperty("id")
