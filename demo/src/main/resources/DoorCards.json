@@ -148,8 +148,51 @@
     },
     "inGame": "drawPile"
   },
-
-  
+  {
+    "id": "MON-011",
+    "type": "monster",
+    "name": "Pchła Wielka",
+    "level": 2,
+    "treasure": 1,
+    "levelsGained": 0,
+    "description": "+2 przeciw niziołkom",
+    "nastyEffect": "Stracisz buty. Jeśli nie masz — stracisz poziom.",
+    "levelsLost": 1,
+    "tags": {
+      "vsHalfling": 2
+    },
+    "inGame": "drawPile"
+  },
+  {
+    "id": "MON-012",
+    "type": "monster",
+    "name": "Trolololo",
+    "level": 6,
+    "treasure": 2,
+    "levelsGained": 0,
+    "description": "+3 przeciw magom",
+    "nastyEffect": "Stracisz 2 poziomy.",
+    "levelsLost": 2,
+    "tags": {
+      "vsMage": 3
+    },
+    "inGame": "drawPile"
+  },
+  { 
+    "id": "MON-013",
+    "type": "monster",
+    "name": "Zły Kotek",
+    "level": 1,
+    "treasure": 1,
+    "levelsGained": 0,
+    "description": "+4 przeciw wojownikom",
+    "nastyEffect": "Rzuć kostką. Stracisz tyle poziomów, ile wypadło.",
+    "levelsLost": "dynamic",
+    "tags": {
+      "vsWarrior": 4
+    },
+    "inGame": "drawPile"
+  },
   {
     "id": "class-warrior",
     "name": "Wojownik",

@@ -38,6 +38,7 @@ public class Player {
     private void StarterPack(){
         for (int i = 0; i < 4; i++) getCard();
         showInventory();
+        selectCard();
     }
 
     public void showInventory(){
@@ -48,7 +49,11 @@ public class Player {
     }
 
     public void selectCard(){
-        int selected = Menu.displayMenu(inventory.toArray());
+        String[] cardNames = new String[inventory.size()];
+        for (int i = 0; i < inventory.size(); i++) {
+            cardNames[i] = inventory.get(i).getName();
+        }
+        int selected = Menu.displayMenu(cardNames);
         Card chosenCard = inventory.get(selected);
         System.out.printf("Wybrałeś kartę: %s%n \n%s", chosenCard.getName(), chosenCard.getDescription());
         int options = Menu.displayMenu(new String[]{"Użyj karty", "Odrzuć kartę", "Anuluj"});
@@ -62,6 +67,7 @@ public class Player {
                 break;
             case 2:
                 System.out.println("Anulowano wybór karty.");
+                selectCard();
                 break;
             default:
                 System.out.println("Nieprawidłowa opcja.");
