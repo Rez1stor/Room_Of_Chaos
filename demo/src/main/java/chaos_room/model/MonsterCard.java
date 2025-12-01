@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import static chaos_room.model.GameConstants.*;
+
 /**
  * Represents a Monster card in the game.
  * Monsters have levels, tags that affect combat, and nasty effects on player loss.
@@ -134,7 +136,7 @@ public class MonsterCard {
      * @return true if monster has the undead tag
      */
     public boolean isUndead() {
-        return tags != null && tags.containsKey("undead") && Boolean.TRUE.equals(tags.get("undead"));
+        return tags != null && tags.containsKey(TAG_UNDEAD) && Boolean.TRUE.equals(tags.get(TAG_UNDEAD));
     }
 
     /**
@@ -142,7 +144,7 @@ public class MonsterCard {
      * @return true if no escape allowed
      */
     public boolean preventsEscape() {
-        return tags != null && tags.containsKey("noEscape") && Boolean.TRUE.equals(tags.get("noEscape"));
+        return tags != null && tags.containsKey(TAG_NO_ESCAPE) && Boolean.TRUE.equals(tags.get(TAG_NO_ESCAPE));
     }
 
     /**
@@ -150,7 +152,7 @@ public class MonsterCard {
      * @return true if help is not allowed
      */
     public boolean preventsHelp() {
-        return tags != null && tags.containsKey("noHelp") && Boolean.TRUE.equals(tags.get("noHelp"));
+        return tags != null && tags.containsKey(TAG_NO_HELP) && Boolean.TRUE.equals(tags.get(TAG_NO_HELP));
     }
 
     /**
@@ -158,7 +160,7 @@ public class MonsterCard {
      * @return true if magic resistant
      */
     public boolean isMagicResistant() {
-        return tags != null && tags.containsKey("magicResist") && Boolean.TRUE.equals(tags.get("magicResist"));
+        return tags != null && tags.containsKey(TAG_MAGIC_RESIST) && Boolean.TRUE.equals(tags.get(TAG_MAGIC_RESIST));
     }
 
     /**
@@ -166,8 +168,8 @@ public class MonsterCard {
      * @return escape bonus/penalty (positive = easier, negative = harder)
      */
     public int getEscapeModifier() {
-        if (tags != null && tags.containsKey("escapeBonus")) {
-            return ((Number) tags.get("escapeBonus")).intValue();
+        if (tags != null && tags.containsKey(EFFECT_ESCAPE_BONUS)) {
+            return ((Number) tags.get(EFFECT_ESCAPE_BONUS)).intValue();
         }
         return 0;
     }
@@ -182,14 +184,14 @@ public class MonsterCard {
             return 0;
         }
         
-        String tagKey = "vs" + capitalizeFirst(raceName);
+        String tagKey = TAG_VS_PREFIX + StringUtils.capitalizeFirst(raceName);
         if (tags.containsKey(tagKey)) {
             return ((Number) tags.get(tagKey)).intValue();
         }
         
         // Also check for alternate spellings
         for (String key : tags.keySet()) {
-            if (key.toLowerCase().startsWith("vs") && 
+            if (key.toLowerCase().startsWith(TAG_VS_PREFIX.toLowerCase()) && 
                 key.toLowerCase().contains(raceName.toLowerCase())) {
                 return ((Number) tags.get(key)).intValue();
             }
@@ -208,7 +210,7 @@ public class MonsterCard {
             return 0;
         }
         
-        String tagKey = "vs" + capitalizeFirst(className);
+        String tagKey = TAG_VS_PREFIX + StringUtils.capitalizeFirst(className);
         if (tags.containsKey(tagKey)) {
             return ((Number) tags.get(tagKey)).intValue();
         }
@@ -231,21 +233,16 @@ public class MonsterCard {
             return ((Number) levelsLost).intValue();
         }
         
-        if ("dynamic".equals(levelsLost)) {
+        if (LEVELS_LOST_DYNAMIC.equals(levelsLost)) {
             // For monsters like Mademoazelle - drop to lowest player level
             if (isMagicResistant()) {
                 return currentPlayerLevel - lowestPlayerLevel;
             }
             // For monsters like Ork 3872 - roll dice (returns max possible)
-            return 6;
+            return MAX_DICE_ROLL;
         }
         
         return 0;
-    }
-
-    private String capitalizeFirst(String str) {
-        if (str == null || str.isEmpty()) return str;
-        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
     }
 
     /**

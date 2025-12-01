@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static chaos_room.model.GameConstants.*;
+
 /**
  * Abstract base class for character components (Race and Class).
  * Demonstrates OOP Abstraction and Inheritance principles.
@@ -132,8 +134,8 @@ public abstract class CharacterComponent {
     public int getHandLimitModifier() {
         for (BaseAbility ability : abilities) {
             Map<String, Object> effects = ability.getEffects();
-            if (effects.containsKey("handLimit")) {
-                return ((Number) effects.get("handLimit")).intValue();
+            if (effects.containsKey(EFFECT_HAND_LIMIT)) {
+                return ((Number) effects.get(EFFECT_HAND_LIMIT)).intValue();
             }
         }
         return 0;

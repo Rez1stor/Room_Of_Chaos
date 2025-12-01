@@ -6,6 +6,7 @@ import java.util.Random;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static chaos_room.model.GameConstants.*;
 
 /**
  * Represents a player in the game.
@@ -19,7 +20,7 @@ public class Player {
     private List<Card> inventory;
     private List<Card> playerDeck;
     private String gender;
-    private int maxCardsInHand = 5;
+    private int maxCardsInHand = DEFAULT_HAND_LIMIT;
     private static Random random = new Random();
     
     // Race and Class - core Munchkin mechanics
@@ -132,8 +133,8 @@ public class Player {
      */
     public void addLevel(int amount) {
         this.level += amount;
-        if (this.level > 10) {
-            this.level = 10; // Max level in Munchkin
+        if (this.level > MAX_LEVEL) {
+            this.level = MAX_LEVEL;
         }
     }
     
@@ -143,8 +144,8 @@ public class Player {
      */
     public void loseLevel(int amount) {
         this.level -= amount;
-        if (this.level < 1) {
-            this.level = 1;
+        if (this.level < MIN_LEVEL) {
+            this.level = MIN_LEVEL;
         }
     }
     
@@ -184,7 +185,7 @@ public class Player {
      * @return true if player has won
      */
     public boolean hasWon() {
-        return level >= 10;
+        return level >= MAX_LEVEL;
     }
     
     /**
@@ -194,7 +195,7 @@ public class Player {
     public String getPlayerDescription() {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("【%s】 Poziom %d\n", name, level));
-        sb.append(String.format("  Płeć: %s\n", gender.equals("Male") ? "Mężczyzna" : "Kobieta"));
+        sb.append(String.format("  Płeć: %s\n", getGenderDisplayName(gender)));
         if (race != null) {
             sb.append(String.format("  Rasa: %s\n", race.getName()));
         }

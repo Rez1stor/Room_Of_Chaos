@@ -3,6 +3,8 @@ package chaos_room.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import static chaos_room.model.GameConstants.*;
+
 /**
  * Base implementation of the Ability interface.
  * Demonstrates OOP encapsulation and implementation of interface.
@@ -75,14 +77,14 @@ public class BaseAbility implements Ability {
     
     @Override
     public boolean isUsableInCombat() {
-        Object usableIn = conditions.get("usableIn");
-        return usableIn == null || "combat".equals(usableIn);
+        Object usableIn = conditions.get(CONDITION_USABLE_IN);
+        return usableIn == null || PHASE_COMBAT.equals(usableIn);
     }
     
     @Override
     public boolean isUsableInEscape() {
-        Object usableIn = conditions.get("usableIn");
-        return "escape".equals(usableIn);
+        Object usableIn = conditions.get(CONDITION_USABLE_IN);
+        return PHASE_ESCAPE.equals(usableIn);
     }
     
     @Override
@@ -90,16 +92,16 @@ public class BaseAbility implements Ability {
         int bonus = 0;
         
         // Combat bonus per discard (e.g., Warrior's Bujstwo)
-        if (effects.containsKey("combatBonusPerDiscard")) {
-            int bonusPerDiscard = ((Number) effects.get("combatBonusPerDiscard")).intValue();
+        if (effects.containsKey(EFFECT_COMBAT_BONUS_PER_DISCARD)) {
+            int bonusPerDiscard = ((Number) effects.get(EFFECT_COMBAT_BONUS_PER_DISCARD)).intValue();
             int maxDiscards = getMaxDiscards();
             int discards = Math.min(context.getCardsDiscarded(), maxDiscards);
             bonus += bonusPerDiscard * discards;
         }
         
         // Bonus vs undead (e.g., Cleric's Banish)
-        if (effects.containsKey("bonusPerDiscardVsUndead") && context.monsterHasTag("undead")) {
-            int bonusPerDiscard = ((Number) effects.get("bonusPerDiscardVsUndead")).intValue();
+        if (effects.containsKey(EFFECT_BONUS_VS_UNDEAD) && context.monsterHasTag(TAG_UNDEAD)) {
+            int bonusPerDiscard = ((Number) effects.get(EFFECT_BONUS_VS_UNDEAD)).intValue();
             int maxDiscards = getMaxDiscards();
             int discards = Math.min(context.getCardsDiscarded(), maxDiscards);
             bonus += bonusPerDiscard * discards;
@@ -113,13 +115,13 @@ public class BaseAbility implements Ability {
         int bonus = 0;
         
         // Escape bonus (e.g., Elf's +1)
-        if (effects.containsKey("escapeBonus")) {
-            bonus += ((Number) effects.get("escapeBonus")).intValue();
+        if (effects.containsKey(EFFECT_ESCAPE_BONUS)) {
+            bonus += ((Number) effects.get(EFFECT_ESCAPE_BONUS)).intValue();
         }
         
         // Escape bonus per discard (e.g., Mage's Flight)
-        if (effects.containsKey("escapeBonusPerDiscard")) {
-            int bonusPerDiscard = ((Number) effects.get("escapeBonusPerDiscard")).intValue();
+        if (effects.containsKey(EFFECT_ESCAPE_BONUS_PER_DISCARD)) {
+            int bonusPerDiscard = ((Number) effects.get(EFFECT_ESCAPE_BONUS_PER_DISCARD)).intValue();
             int maxDiscards = getMaxDiscards();
             int discards = Math.min(context.getCardsDiscarded(), maxDiscards);
             bonus += bonusPerDiscard * discards;
@@ -133,8 +135,8 @@ public class BaseAbility implements Ability {
      * @return max discards, defaults to 0 if not specified
      */
     protected int getMaxDiscards() {
-        if (conditions.containsKey("maxDiscards")) {
-            return ((Number) conditions.get("maxDiscards")).intValue();
+        if (conditions.containsKey(CONDITION_MAX_DISCARDS)) {
+            return ((Number) conditions.get(CONDITION_MAX_DISCARDS)).intValue();
         }
         return 0;
     }
@@ -144,7 +146,7 @@ public class BaseAbility implements Ability {
      * @return true if ability wins on tie
      */
     public boolean winsOnTie() {
-        return effects.containsKey("winOnTie") && (Boolean) effects.get("winOnTie");
+        return effects.containsKey(EFFECT_WIN_ON_TIE) && (Boolean) effects.get(EFFECT_WIN_ON_TIE);
     }
     
     /**
@@ -152,7 +154,7 @@ public class BaseAbility implements Ability {
      * @return true if second escape is allowed
      */
     public boolean allowsSecondEscape() {
-        return effects.containsKey("secondEscapeAttempt") && (Boolean) effects.get("secondEscapeAttempt");
+        return effects.containsKey(EFFECT_SECOND_ESCAPE_ATTEMPT) && (Boolean) effects.get(EFFECT_SECOND_ESCAPE_ATTEMPT);
     }
     
     @Override

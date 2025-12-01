@@ -66,24 +66,15 @@ public class Race extends CharacterComponent {
      * @return bonus modifier against this monster
      */
     public int getBonusAgainstMonster(MonsterCard monster) {
-        if (monster == null || monster.getTags() == null) {
-            return 0;
-        }
-        
-        // Check if monster has a penalty against this race
-        String raceTagKey = "vs" + capitalizeFirst(this.name);
-        if (monster.getTags().containsKey(raceTagKey)) {
-            // This is actually a bonus for the monster, so we return negative
-            return 0;
-        }
-        
+        // Races don't get direct bonuses against monsters in Munchkin
+        // The monster gets bonuses against races instead
         return 0;
     }
     
     /**
      * Checks if this race has a penalty against a specific monster.
      * @param monster the monster to check
-     * @return penalty amount (negative number)
+     * @return penalty amount (to be added to monster's level)
      */
     public int getPenaltyFromMonster(MonsterCard monster) {
         if (monster == null || monster.getTags() == null) {
@@ -103,11 +94,6 @@ public class Race extends CharacterComponent {
         }
         
         return 0;
-    }
-    
-    private String capitalizeFirst(String str) {
-        if (str == null || str.isEmpty()) return str;
-        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
     }
 }
 

@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static chaos_room.model.GameConstants.*;
+
 /**
  * Handles combat between players and monsters.
  * Implements Munchkin-like battle mechanics with class/race abilities and monster tags.
  * Demonstrates OOP Encapsulation and Single Responsibility Principle.
  */
 public class Combat {
-    private static final Random random = new Random();
-    private static final int ESCAPE_SUCCESS_THRESHOLD = 5; // Roll 5+ to escape
+    private final Random random;
     
     private Player player;
     private MonsterCard monster;
@@ -37,6 +38,19 @@ public class Combat {
         this.context = new CombatContext(player, monster);
         this.cardsUsedInCombat = new ArrayList<>();
         this.result = CombatResult.IN_PROGRESS;
+        this.random = new Random();
+    }
+    
+    /**
+     * Constructor with injectable Random for testing.
+     */
+    public Combat(Player player, MonsterCard monster, Random random) {
+        this.player = player;
+        this.monster = monster;
+        this.context = new CombatContext(player, monster);
+        this.cardsUsedInCombat = new ArrayList<>();
+        this.result = CombatResult.IN_PROGRESS;
+        this.random = random;
     }
     
     /**
@@ -253,7 +267,7 @@ public class Combat {
         // Elf helper gets a level too
         if (helper != null && helper.getRace() != null) {
             for (BaseAbility ability : helper.getRace().getAbilities()) {
-                if (ability.getEffects().containsKey("levelForHelping")) {
+                if (ability.getEffects().containsKey(EFFECT_LEVEL_FOR_HELPING)) {
                     helper.addLevel(1);
                     break;
                 }
