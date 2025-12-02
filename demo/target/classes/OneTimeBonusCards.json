@@ -1,0 +1,38 @@
+[
+  {
+    "id": "BON-002",
+    "type": "bonus",
+    "name": "Huge",
+    "description": "+10 to monster. Usable in any combat. If you defeat a Huge monster, draw two extra treasures.",
+    "treasureBonus": 2,
+    "battleBonus": 10,
+    "inGame": "drawPile"
+  },
+  {
+    "id": "BON-003",
+    "type": "bonus",
+    "name": "Ancient",
+    "description": "+10 to monster. Usable in any combat. If you defeat an Ancient monster, draw two extra treasures.",
+    "treasureBonus": 2,
+    "battleBonus": 10,
+    "inGame": "drawPile"
+  },
+  {
+    "id": "BON-004",
+    "type": "bonus",
+    "name": "Experienced",
+    "description": "+5 to monster. Usable in any combat. If you defeat an Experienced monster, draw one extra treasure.",
+    "treasureBonus": 1,
+    "battleBonus": 5,
+    "inGame": "drawPile"
+  },
+  {
+    "id": "BON-005",
+    "type": "bonus",
+    "name": "Enraged",
+    "description": "+5 to monster. Usable in any combat. If you defeat an Enraged monster, draw one extra treasure.",
+    "treasureBonus": 1,
+    "battleBonus": 5,
+    "inGame": "drawPile"
+  }
+]

@@ -1,0 +1,199 @@
+[
+  {
+    "id": "MON-001",
+    "type": "monster",
+    "name": "Stunned Grass",
+    "level": 1,
+    "treasure": 1,
+    "levelsGained": 1,
+    "description": "You defeated the grass. Warriors must fight, others can run away.",
+    "nastyEffect": "None.",
+    "levelsLost": 0,
+    "tags": {
+      "GrassMonster": true
+    },
+    "inGame": "drawPile"
+  },
+  {
+    "id": "MON-002",
+    "type": "monster",
+    "name": "Undead Horse",
+    "level": 4,
+    "treasure": 2,
+    "levelsGained": 1,
+    "description": "+5 against Dwarves",
+    "nastyEffect": "Kicks, bites, and smells terrible. Lose 2 levels.",
+    "levelsLost": 2,
+    "tags": {
+      "undead": true,
+      "vsDwarf": 5
+    },
+    "inGame": "drawPile"
+  },
+  {
+    "id": "MON-003",
+    "type": "monster",
+    "name": "Drooling Slime",
+    "level": 4,
+    "treasure": 2,
+    "levelsGained": 1,
+    "description": "-2 to Run Away",
+    "nastyEffect": "They steal treasure. Lose as many items as the die roll.",
+    "levelsLost": 0,
+    "tags": {
+      "escapeBonus": -2
+    },
+    "inGame": "drawPile"
+  },
+  {
+    "id": "MON-004",
+    "type": "monster",
+    "name": "Gazebo",
+    "level": 8,
+    "treasure": 2,
+    "levelsGained": 1,
+    "description": "No one can help you.",
+    "nastyEffect": "Lose 3 levels.",
+    "levelsLost": 3,
+    "tags": {
+      "noHelp": true
+    },
+    "inGame": "drawPile"
+  },
+  {
+    "id": "MON-005",
+    "type": "monster",
+    "name": "Maiden",
+    "level": 8,
+    "treasure": 2,
+    "levelsGained": 1,
+    "description": "No bonuses help in combat. Defeat with Level only.",
+    "nastyEffect": "Your level drops to the level of the lowest player in the game.",
+    "levelsLost": "dynamic",
+    "tags": {
+      "magicResist": true
+    },
+    "inGame": "drawPile"
+  },
+  {
+    "id": "MON-006",
+    "type": "monster",
+    "name": "Hammer Rat",
+    "level": 1,
+    "treasure": 1,
+    "levelsGained": 1,
+    "description": "+3 against Clerics",
+    "nastyEffect": "Hit by a hammer... lose a level.",
+    "levelsLost": 1,
+    "tags": {
+      "vsCleric": 3
+    },
+    "inGame": "drawPile"
+  },
+  {
+    "id": "MON-007",
+    "type": "monster",
+    "name": "Dripping Slime",
+    "level": 1,
+    "treasure": 1,
+    "levelsGained": 1,
+    "description": "+4 against Elves",
+    "nastyEffect": "Lose your Footgear. If you have none, lose a level.",
+    "levelsLost": 1,
+    "tags": {
+      "vsElf": 4
+    },
+    "inGame": "drawPile"
+  },
+  {
+    "id": "MON-008",
+    "type": "monster",
+    "name": "Lice",
+    "level": 1,
+    "treasure": 1,
+    "levelsGained": 1,
+    "description": "Cannot Run Away.",
+    "nastyEffect": "Lose Armor and all items below the waist.",
+    "levelsLost": 1,
+    "tags": {
+      "noEscape": true
+    },
+    "inGame": "drawPile"
+  },
+  {
+    "id": "MON-009",
+    "type": "monster",
+    "name": "Damaged Goblin",
+    "level": 1,
+    "treasure": 1,
+    "levelsGained": 1,
+    "description": "+1 to Run Away",
+    "nastyEffect": "Hits you with a crutch. Lose a level.",
+    "levelsLost": 1,
+    "tags": {
+      "escapeBonus": 1
+    },
+    "inGame": "drawPile"
+  },
+  {
+    "id": "MON-010",
+    "type": "monster",
+    "name": "Orc 3872",
+    "level": 10,
+    "treasure": 3,
+    "levelsGained": 2,
+    "description": "+6 against Dwarves",
+    "nastyEffect": "Roll a die. Lose that many levels.",
+    "levelsLost": "dynamic",
+    "tags": {
+      "vsDwarf": 6
+    },
+    "inGame": "drawPile"
+  },
+  {
+    "id": "MON-011",
+    "type": "monster",
+    "name": "Large Flea",
+    "level": 2,
+    "treasure": 1,
+    "levelsGained": 1,
+    "description": "+2 against Halflings",
+    "nastyEffect": "Lose your Footgear. If you have none, lose a level.",
+    "levelsLost": 1,
+    "tags": {
+      "vsHalfling": 2
+    },
+    "inGame": "drawPile"
+  },
+  {
+    "id": "MON-012",
+    "type": "monster",
+    "name": "Trolololo",
+    "level": 6,
+    "treasure": 2,
+    "levelsGained": 1,
+    "description": "+3 against Mages",
+    "nastyEffect": "Lose 2 levels.",
+    "levelsLost": 2,
+    "tags": {
+      "vsMage": 3
+    },
+    "inGame": "drawPile"
+  },
+  { 
+    "id": "MON-013",
+    "type": "monster",
+    "name": "Bad Kitty",
+    "level": 1,
+    "treasure": 1,
+    "levelsGained": 1,
+    "description": "+4 against Warriors",
+    "nastyEffect": "Roll a die. Lose that many levels.",
+    "levelsLost": "dynamic",
+    "tags": {
+      "vsWarrior": 4
+    },
+    "inGame": "drawPile"
+  }
+]
+

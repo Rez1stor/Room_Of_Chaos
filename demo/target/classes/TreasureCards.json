@@ -1,0 +1,23 @@
+[
+    {
+        "id": "treasure-gold",
+        "name": "Bag of Gold",
+        "type": "treasure",
+        "description": "A bag full of gold coins. You can sell it for 500 Gold Pieces.",
+        "value": 500
+    },
+    {
+        "id": "treasure-potion",
+        "name": "Potion of Strength",
+        "type": "treasure",
+        "description": "Drink to gain +3 Strength in the next combat.",
+        "bonus": 3
+    },
+    {
+        "id": "treasure-sword",
+        "name": "Sword of Destiny",
+        "type": "treasure",
+        "description": "A legendary sword that gives +5 Strength.",
+        "bonus": 5
+    }
+]

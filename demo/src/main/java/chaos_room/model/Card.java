@@ -1,29 +1,33 @@
 package chaos_room.model;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Card {
+public abstract class Card implements Usable {
     private String id;
     private String name;
-    private String type;
+    private CardType type;
     private String description;
 
     public Card() {}
 
-    public Card(String id, String name, String type, String description) {
+    public Card(String id, String name, CardType type, String description) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.description = description;
+    }
+    
+    @Override
+    public boolean use(Player player, chaos_room.view.GameView view) {
+        // Default implementation: just add to deck/inventory if not handled by subclass?
+        // Or throw exception?
+        // In original code: "else { player.addCardToPlayerDeck(card); ... }"
+        player.addCardToPlayerDeck(this);
+        view.displayMessage("Card added to inventory: " + this.getName());
+        view.displayMessage(String.format("Card %s added to player's deck.", this.getName()));
+        player.getInventory().remove(this);
+        return false;
     }
     
 
@@ -31,39 +35,42 @@ public class Card {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
-    public String getType() {
+    public Card setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public CardType getType() {
         return type;
+    }
+
+    public void setType(CardType type) {
+        this.type = type;
+    }
+
+    public String getDetails() {
+        return "";
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return String.format("Card{id='%s', name='%s', type='%s', description='%s'}", id, name, type, description);
-    }
-
-    public static Card getRandomCardFromJson(String jsonFilePath) {
-        try{
-            FileReader reader = new FileReader(Card.class.getClassLoader().getResource(jsonFilePath).getPath());
-            ObjectMapper json = new ObjectMapper();
-            List<Card> cards = json.readValue(reader, new TypeReference<List<Card>>() {}); 
-            if (cards == null || cards.size() == 0) {
-                return null;
-            }
-            int idx = (int) (Math.random() * cards.size());
-            System.out.println("Wylosowana karta: " + cards.get(idx).getName());
-            reader.close();
-            return cards.get(idx);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
 }

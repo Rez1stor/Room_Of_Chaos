@@ -6,24 +6,24 @@ import org.jline.utils.NonBlockingReader;
 import chaos_room.model.Player;
 
 public class Menu {
-    public static int displayMenu(Object[] options) {
+    public static int displayMenu(Object[] options, String title) {
         try (Terminal terminal = TerminalBuilder.builder()
                 .system(true)
                 .build();
             NonBlockingReader reader = terminal.reader()) {
+            ConsoleView view = new ConsoleView();
             
             int selected = 0;
             while (true) {
                 terminal.puts(org.jline.utils.InfoCmp.Capability.clear_screen);
-                terminal.writer().println("Wybierz opcję (strzałki ↑↓, Enter):");
-
+                // Use ConsoleView methods for consistent formatting
+                view.displayMenuTitle(title);
+                
                 for (int i = 0; i < options.length; i++) {
-                    if (i == selected) {
-                        terminal.writer().println("> " + options[i]);
-                    } else {
-                        terminal.writer().println("  " + options[i]);
-                    }
+                    view.displayMenuOption(options[i].toString(), i == selected);
                 }
+                view.displayMenuBottom();
+                
                 terminal.flush();
 
                 int c = reader.read();
@@ -38,7 +38,7 @@ public class Menu {
             }
 
         } catch (java.io.IOException e) {
-            System.out.println("Błąd wejścia/wyjścia podczas wyświetlania menu.");
+            new ConsoleView().displayMessage("Error displaying menu.");
             return -1;
         }
     }

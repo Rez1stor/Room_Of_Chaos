@@ -1,13 +1,10 @@
 package chaos_room.model;
-import chaos_room.view.Menu;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.io.FileReader;
-import java.io.IOException;
 
-
-public class Player {
+public class Player implements Combatant {
     private String name;
     private int level;
     private int strength;
@@ -15,69 +12,38 @@ public class Player {
     private List<Card> playerDeck;
     private String gender;
     private int maxCardsInHand = 5;
+    private int escapeChances = 4;
     private static Random random = new Random();
 
     public Player(String name, String gender) {
         this.name = name;
         this.gender = gender;
         level = 1;
+        strength = level;
         inventory = new ArrayList<>();   
-        
-        StarterPack();
+        playerDeck = new ArrayList<>();
     }
 
-    public void getCard() {
-        if (inventory.size() >= maxCardsInHand) {
-            System.out.println("Nie możesz wziąć więcej kart, Twój ekwipunek jest pełny.");
-            return;
-        }else{
-            inventory.add(Card.getRandomCardFromJson("DoorCards.json"));
+    public Card drawDoorCard() {
+        Deck deck = new Deck();
+        int randomIndex = random.nextInt(deck.cards.size());
+        return deck.cards.get(randomIndex);
+    }
+
+    public Card drawTreasureCard() {
+        Deck deck = new Deck();
+        int randomIndex = random.nextInt(deck.treasureCards.size());
+        return deck.treasureCards.get(randomIndex);
+    }
+
+    public void starterPack(){
+        for (int i = 0; i < 4; i++) {
+            Card card = drawDoorCard();
+            inventory.add(card);
         }
     }
 
-    private void StarterPack(){
-        for (int i = 0; i < 4; i++) getCard();
-        showInventory();
-        selectCard();
-    }
-
-    public void showInventory(){
-        System.out.println("Ekwipunek gracza " + name + ":");
-        for (Card card : inventory) {
-            System.out.printf("- %s (Typ: %s, Opis: %s)%n", card.getName(), card.getType(), card.getDescription());
-        }
-    }
-
-    public void selectCard(){
-        String[] cardNames = new String[inventory.size()];
-        for (int i = 0; i < inventory.size(); i++) {
-            cardNames[i] = inventory.get(i).getName();
-        }
-        int selected = Menu.displayMenu(cardNames);
-        Card chosenCard = inventory.get(selected);
-        System.out.printf("Wybrałeś kartę: %s%n \n%s", chosenCard.getName(), chosenCard.getDescription());
-        int options = Menu.displayMenu(new String[]{"Użyj karty", "Odrzuć kartę", "Anuluj"});
-        switch (options) {
-            case 0:
-                useCard(chosenCard);
-                break;
-            case 1:
-                System.out.println("Odrzucasz kartę: " + chosenCard.getName());
-                inventory.remove(chosenCard);
-                break;
-            case 2:
-                System.out.println("Anulowano wybór karty.");
-                selectCard();
-                break;
-            default:
-                System.out.println("Nieprawidłowa opcja.");
-                break;
-        }
-    }
-
-    public void useCard(Card card){
-        System.out.println("Używasz karty: " + card.getName());
-        inventory.remove(card);
+    public void addCardToPlayerDeck(Card card) {
         playerDeck.add(card);
     }
 
@@ -85,12 +51,22 @@ public class Player {
         return name;
     }
     
+    public int getEscapeChances() {
+        return escapeChances;
+    }
+
     public int getLevel() {
         return level;
     }
 
     public int getStrength() {
-        return strength;
+        int totalStrength = level;
+        for (Card c : playerDeck) {
+            if (c instanceof EquipmentCard) {
+                totalStrength += ((EquipmentCard) c).getBonus();
+            }
+        }
+        return totalStrength;
     }
 
     public String getGender() {
@@ -99,5 +75,38 @@ public class Player {
 
     public List<Card> getInventory() {
         return inventory;
+    }
+
+    public List<Card> getPlayerDeck() {
+        return playerDeck;
+    }
+
+    public int getMaxCardsInHand() {
+        return maxCardsInHand;
+    }
+
+    public int setEscapeChances(int escapeChances) {
+        return this.escapeChances = escapeChances;
+    }
+
+    public int setStrength(){
+        return strength;
+    }
+
+    public void levelUp(int increment) {
+        level += increment;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public String getPlayerCharacter() {
+        for (Card c : playerDeck) {
+            if (c instanceof CharacterCard) {
+                return ((CharacterCard) c).getName();
+            }
+        }
+        return null;
     }
 }

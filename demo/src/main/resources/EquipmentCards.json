@@ -1,0 +1,52 @@
+[
+  {
+    "id": "EQP-001",
+    "type": "equipment",
+    "name": "Leather Armor",
+    "description": "+1 Bonus. Armor.",
+    "bonus": 1,
+    "slot": "Body",
+    "value": 200,
+    "inGame": "drawPile"
+  },
+  {
+    "id": "EQP-002",
+    "type": "equipment",
+    "name": "Boots of Running Really Fast",
+    "description": "+2 to Run Away.",
+    "bonus": 0,
+    "slot": "Feet",
+    "value": 400,
+    "inGame": "drawPile"
+  },
+  {
+    "id": "EQP-003",
+    "type": "equipment",
+    "name": "Helm of Courage",
+    "description": "+1 Bonus. Headgear.",
+    "bonus": 1,
+    "slot": "Head",
+    "value": 200,
+    "inGame": "drawPile"
+  },
+  {
+    "id": "EQP-004",
+    "type": "equipment",
+    "name": "Chainsaw of Bloody Dismemberment",
+    "description": "+3 Bonus. 2 Hands.",
+    "bonus": 3,
+    "slot": "Hand",
+    "value": 600,
+    "inGame": "drawPile"
+  },
+  {
+    "id": "EQP-005",
+    "type": "equipment",
+    "name": "Cheese Grater of Peace",
+    "description": "+2 Bonus. 1 Hand.",
+    "bonus": 2,
+    "slot": "Hand",
+    "value": 400,
+    "inGame": "drawPile"
+  }
+]
