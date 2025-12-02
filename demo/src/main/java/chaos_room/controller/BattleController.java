@@ -17,7 +17,7 @@ public class BattleController {
     }
 
     public void handleFight(MonsterCard monster, Player player) {
-        // Reset monster strength to base level before applying modifiers
+        // Reset monster strength
         monster.setStrength(monster.getLevel());
         game.checkMonsterTags(monster, player);
         
@@ -32,7 +32,7 @@ public class BattleController {
             
             boolean isWarrior = player.getPlayerDeck().stream().anyMatch(c -> "class-warrior".equals(c.getId()));
             String[] options;
-            // Warrior class special ability: can discard up to 3 cards for bonus strength
+            // Warrior can discard cards for bonus
             if (isWarrior && warriorBonusUsed < 3) {
                 options = new String[]{"Fight", "Use Bonus Card", "Warrior Rage (Discard for +3)"};
             } else {
@@ -46,7 +46,7 @@ public class BattleController {
             }
 
             switch (choice) {
-                case 0: // Fight
+                case 0:
                     boolean win = isWarrior ? currentStrength >= monster.getStrength() : currentStrength > monster.getStrength();
                     
                     if (win) {
@@ -55,7 +55,7 @@ public class BattleController {
                     } else {
                         view.displayMessage("You are too weak! You lost the fight!");
                         Random rand = new Random();
-                        int dieFace = rand.nextInt(6) + 1; // 1-6
+                        int dieFace = rand.nextInt(6) + 1; 
                         view.displayMessage("You try to run away... Rolled a " + dieFace);
                         
                         if (dieFace >= player.getEscapeChances()) {
@@ -68,7 +68,7 @@ public class BattleController {
                         fightOver = true;
                     }
                     break;
-                case 1: // Use Bonus
+                case 1: 
                     Card selected = promptBonusCardSelection(player);
                     if (selected != null) {
                         playerBonus += ((OneTimeBonusCard)selected).getBattleBonus();
@@ -77,7 +77,7 @@ public class BattleController {
                         view.waitForInput();
                     }
                     break;
-                case 2: // Warrior Rage
+                case 2:
                     Card toDiscard = promptCardSelection(player);
                     if (toDiscard != null) {
                         player.getInventory().remove(toDiscard);
@@ -121,15 +121,12 @@ public class BattleController {
         int lost = 0;
         Object levelsLostObj = monster.getLevelsLost();
 
-        // Handle different types of "Bad Stuff" from JSON (can be a fixed number or "dynamic" roll)
         if (levelsLostObj instanceof Number) {
             lost = ((Number) levelsLostObj).intValue();
         } else if (levelsLostObj instanceof String) {
             String s = (String) levelsLostObj;
             if ("dynamic".equalsIgnoreCase(s)) {
-                // Roll a die to decide how many levels to lose
                 Random rand = new Random();
-                lost = rand.nextInt(6) + 1;
                 lost = rand.nextInt(6) + 1;
                 view.displayMessage("Rolling die for level loss... Result: " + lost);
             } else {

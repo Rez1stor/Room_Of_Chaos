@@ -57,7 +57,7 @@ public class InventoryController {
         
         boolean result = card.use(player, view);
 
-        // If player uses a Monster card from hand (e.g. "Looking for Trouble"), start a fight immediately
+        // If monster from hand (Looking for Trouble), start fight
         if (card.getType() == CardType.MONSTER) {
             battleController.handleFight((MonsterCard) card, player);
             return true;

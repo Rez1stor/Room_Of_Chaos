@@ -27,7 +27,7 @@ public class GameController {
     }
 
     private void playTurn(Player player) {
-        // Check winning condition: Level 10
+        // Win at level 10
         if (player.getLevel() >= 10) {
             try {
                 gameOver(player);
