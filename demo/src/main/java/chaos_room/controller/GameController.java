@@ -222,14 +222,20 @@ public class GameController {
 
     /**
      * Simulate combat between player and monster.
+     * Uses the Combatant interface for consistent combat mechanics.
      */
-    public boolean combat(Player player, MonsterCard monster, Player helper) {
+    public boolean combat(Player player, Monster monster, Player helper) {
         int playerStrength = player.getCombatStrength();
         if (helper != null) {
-            playerStrength += helper.getCombatStrength();
+            // Check if monster prevents help
+            if (monster.preventsHelp()) {
+                System.out.println("Ten potwór nie pozwala na pomoc innych graczy!");
+            } else {
+                playerStrength += helper.getCombatStrength();
+            }
         }
         
-        int monsterStrength = monster.getLevel();
+        int monsterStrength = monster.getCombatStrength();
         
         System.out.println("\n=== WALKA ===");
         System.out.println(player.getName() + " (siła: " + playerStrength + ") vs " + monster.getName() + " (poziom: " + monsterStrength + ")");
@@ -254,12 +260,19 @@ public class GameController {
     /**
      * Attempt to escape from a monster.
      */
-    private boolean attemptEscape(Player player, MonsterCard monster) {
+    private boolean attemptEscape(Player player, Monster monster) {
+        // Check if escape is possible
+        if (!monster.canEscape()) {
+            System.out.println("Nie można uciec od tego potwora!");
+            System.out.println("Efekt paskudztwa: " + monster.getCard().getNastyEffect());
+            return false;
+        }
+        
         int roll = random.nextInt(6) + 1;
-        int escapeBonus = player.getEscapeBonus();
+        int escapeBonus = player.getEscapeBonus() + monster.getEscapeBonus();
         int totalRoll = roll + escapeBonus;
         
-        System.out.println("Rzut na ucieczkę: " + roll + " + " + escapeBonus + " = " + totalRoll);
+        System.out.println("Rzut na ucieczkę: " + roll + " + bonus " + escapeBonus + " = " + totalRoll);
         
         if (totalRoll >= 5) {
             System.out.println("Udało się uciec!");
@@ -274,7 +287,7 @@ public class GameController {
             }
             
             // Apply nasty effect
-            System.out.println("Efekt paskudztwa: " + monster.getNastyEffect());
+            System.out.println("Efekt paskudztwa: " + monster.getCard().getNastyEffect());
             return false;
         }
     }
